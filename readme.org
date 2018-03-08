@@ -1,0 +1,38 @@
+#+TITLE: Drone digitalocean droplet control 
+
+Start up a new droplet to deploy your build to via ssh or other means when tests have passed.
+
+The main usage for this would be for setup where all assets are stored in buckets and data on a seperate server,
+this allows you to destroy the old server and create a new one fresh on each deployment but maintain your data and assets.
+
+
+Required environment variables
+TOKEN=DIGITALOCEAN_API_TOKEN_HERE
+
+Available environment variable, with defaults
+DO_NAME=ubuntu-16-04-x64
+DO_REGION=LON1
+DO_MEM=1gb
+DO_IMAGE=ubuntu-16-04-x64
+DO_SSH=None
+DO_TAGS=drone
+
+Tags
+Your droplet will always have the tag drone, you can append your own with a comma delimited list.
+DO_TAGS=stage,${DRONE_BRANCH}
+
+ssh
+Comma delimited list of keys to use, none will be attached by default
+DO_TAGS=stage,${DRONE_BRANCH}
+
+* Building locally
+
+#+BEGIN_SRC bash
+docker build -t olymk2/drone-digitalocean .
+#+END_SRC
+
+* Testing locally
+You can run the plugin from docker with the command below, or just run =python example.py= outside the container.
+#+BEGIN_SRC bash 
+docker run drone-digitalocean
+#+END_SRC
